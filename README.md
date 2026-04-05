@@ -11,7 +11,7 @@ A series of standalone visual tutorials that explain the [official Go tutorials]
 | 01  | [Getting started](go-getting-started.html)                          | 🔲 Planned |
 | 02  | [Create a module](go-create-module.html)                            | 🔲 Planned |
 | 03  | [Multi-module workspaces](go-workspaces-tutorial.html)              | ✅ Done    |
-| 04  | [Accessing a relational database](go-database-access.html)          | 🔲 Planned |
+| 04  | [Accessing a relational database](go-database-access.html)          | ✅ Done    |
 | 05  | [RESTful API with Go and Gin](go-rest-api-gin.html)                 | 🔲 Planned |
 | 06  | [Getting started with generics](go-generics.html)                   | 🔲 Planned |
 | 07  | [Getting started with fuzzing](go-fuzzing.html)                     | 🔲 Planned |
