@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visual Go Tutorials</title>
+    <meta
+      name="description"
+      content="Learn Go with diagrams, not walls of text. Visual companions to the official Go tutorials."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #fafaf7;
+        --bg-card: #ffffff;
+        --text: #1a1a1a;
+        --text-secondary: #5c5c5c;
+        --text-tertiary: #8a8a8a;
+        --accent: #00897b;
+        --accent-light: #e0f2f1;
+        --accent-glow: rgba(0, 137, 123, 0.08);
+        --purple: #6c5ce7;
+        --purple-light: #ede9fe;
+        --coral: #e17055;
+        --coral-light: #fff0ed;
+        --amber: #f0932b;
+        --amber-light: #fff8e1;
+        --blue: #2e86de;
+        --blue-light: #e8f4fd;
+        --border: #e8e7e3;
+        --font-display: "DM Serif Display", serif;
+        --font-body: "Source Sans 3", sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+        --max-w: 820px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font-body);
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.72;
+        font-size: 17px;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .container {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      /* ── HERO ── */
+      .hero {
+        padding: 6rem 0 4rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 500px 300px at 30% 50%,
+            rgba(0, 137, 123, 0.07),
+            transparent
+          ),
+          radial-gradient(
+            ellipse 400px 350px at 70% 40%,
+            rgba(108, 92, 231, 0.05),
+            transparent
+          ),
+          radial-gradient(
+            ellipse 300px 200px at 50% 80%,
+            rgba(225, 112, 85, 0.04),
+            transparent
+          );
+        pointer-events: none;
+      }
+      .hero-logo {
+        width: 56px;
+        height: 56px;
+        background: var(--accent);
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-family: var(--font-display);
+        font-size: 30px;
+        line-height: 1;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0, 137, 123, 0.2);
+      }
+      .hero h1 {
+        font-family: var(--font-display);
+        font-size: clamp(2.4rem, 5.5vw, 3.6rem);
+        font-weight: 400;
+        line-height: 1.15;
+        margin-bottom: 1rem;
+        position: relative;
+      }
+      .hero p {
+        font-size: 1.15rem;
+        color: var(--text-secondary);
+        max-width: 520px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
+      .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        margin-top: 2.5rem;
+        position: relative;
+      }
+      .stat {
+        text-align: center;
+      }
+      .stat-num {
+        font-family: var(--font-display);
+        font-size: 1.8rem;
+        color: var(--accent);
+        line-height: 1.2;
+      }
+      .stat-label {
+        font-size: 0.8rem;
+        color: var(--text-tertiary);
+        margin-top: 0.15rem;
+      }
+
+      /* ── SECTION ── */
+      .section-label {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+      }
+      .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: 400;
+        line-height: 1.3;
+        margin-bottom: 0.6rem;
+      }
+      .section-desc {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        max-width: 560px;
+      }
+
+      /* ── TUTORIAL CARDS ── */
+      .tutorials-section {
+        padding: 3rem 0 1rem;
+      }
+      .tutorial-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .tutorial-card {
+        display: grid;
+        grid-template-columns: 48px 1fr auto;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.1rem 1.4rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s,
+          transform 0.15s;
+      }
+      .tutorial-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 4px 20px var(--accent-glow);
+        transform: translateY(-1px);
+      }
+      .tutorial-card.upcoming {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .tutorial-card.upcoming:hover {
+        border-color: var(--border);
+        box-shadow: none;
+        transform: none;
+      }
+
+      .card-num {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        flex-shrink: 0;
+      }
+      .card-num.done {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+      .card-num.planned {
+        background: #f2f1ed;
+        color: var(--text-tertiary);
+      }
+
+      .card-body {
+        min-width: 0;
+      }
+      .card-title {
+        font-size: 1.02rem;
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1.3;
+        margin-bottom: 0.15rem;
+      }
+      .card-desc {
+        font-size: 0.85rem;
+        color: var(--text-tertiary);
+        line-height: 1.5;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .card-status {
+        flex-shrink: 0;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 0.25rem 0.65rem;
+        border-radius: 100px;
+      }
+      .card-status.done {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+      .card-status.planned {
+        background: #f2f1ed;
+        color: var(--text-tertiary);
+      }
+
+      /* ── BONUS SECTION ── */
+      .bonus-section {
+        padding: 3rem 0 1rem;
+      }
+
+      /* ── HOW IT WORKS ── */
+      .how-section {
+        padding: 3rem 0;
+      }
+      .how-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .how-card {
+        padding: 1.4rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--bg-card);
+      }
+      .how-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.8rem;
+        font-size: 1rem;
+      }
+      .how-card:nth-child(1) .how-icon {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+      .how-card:nth-child(2) .how-icon {
+        background: var(--purple-light);
+        color: var(--purple);
+      }
+      .how-card:nth-child(3) .how-icon {
+        background: var(--coral-light);
+        color: var(--coral);
+      }
+      .how-card h3 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+      }
+      .how-card p {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      /* ── FOOTER ── */
+      .site-footer {
+        padding: 2.5rem 0;
+        border-top: 1px solid var(--border);
+        margin-top: 3rem;
+        text-align: center;
+      }
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .footer-links a {
+        font-size: 0.85rem;
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .footer-links a:hover {
+        opacity: 0.7;
+      }
+      .footer-note {
+        font-size: 0.78rem;
+        color: var(--text-tertiary);
+        line-height: 1.7;
+      }
+      .footer-note a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 640px) {
+        .hero {
+          padding: 4rem 0 3rem;
+        }
+        .hero-stats {
+          gap: 1.5rem;
+        }
+        .tutorial-card {
+          grid-template-columns: 40px 1fr;
+        }
+        .card-status {
+          display: none;
+        }
+        .card-num {
+          width: 40px;
+          height: 40px;
+          font-size: 0.78rem;
+        }
+        .how-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ── ANIMATION ── */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .tutorial-card,
+      .how-card {
+        animation: fadeInUp 0.4s ease-out both;
+      }
+      .tutorial-card:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .tutorial-card:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .tutorial-card:nth-child(3) {
+        animation-delay: 0.15s;
+      }
+      .tutorial-card:nth-child(4) {
+        animation-delay: 0.2s;
+      }
+      .tutorial-card:nth-child(5) {
+        animation-delay: 0.25s;
+      }
+      .tutorial-card:nth-child(6) {
+        animation-delay: 0.3s;
+      }
+      .tutorial-card:nth-child(7) {
+        animation-delay: 0.35s;
+      }
+      .tutorial-card:nth-child(8) {
+        animation-delay: 0.4s;
+      }
+      .tutorial-card:nth-child(9) {
+        animation-delay: 0.45s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- ═══════════════════ HERO ═══════════════════ -->
+      <header class="hero">
+        <div class="hero-logo">G</div>
+        <h1>Visual Go Tutorials</h1>
+        <p>
+          Learn Go with diagrams, not walls of text. Visual companions to the
+          official go.dev tutorials.
+        </p>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-num">9</div>
+            <div class="stat-label">Tutorials</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Published</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">Go 1.18+</div>
+            <div class="stat-label">Version</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ═══════════════════ CORE TUTORIALS ═══════════════════ -->
+      <section class="tutorials-section">
+        <div class="section-label">Core series</div>
+        <h2 class="section-title">Official Go tutorials, visualized</h2>
+        <p class="section-desc">
+          Each tutorial matches an official go.dev tutorial — same content,
+          richer visuals.
+        </p>
+
+        <div class="tutorial-grid">
+          <a href="#" class="tutorial-card upcoming">
+            <div class="card-num planned">01</div>
+            <div class="card-body">
+              <div class="card-title">Getting started</div>
+              <div class="card-desc">Say Hello, World with Go</div>
+            </div>
+            <span class="card-status planned">Coming soon</span>
+          </a>
+
+          <a href="#" class="tutorial-card upcoming">
+            <div class="card-num planned">02</div>
+            <div class="card-body">
+              <div class="card-title">Create a module</div>
+              <div class="card-desc">
+                Common language features from the Go perspective
+              </div>
+            </div>
+            <span class="card-status planned">Coming soon</span>
+          </a>
+
+          <a href="go-workspaces-tutorial.html" class="tutorial-card">
+            <div class="card-num done">03</div>
+            <div class="card-body">
+              <div class="card-title">Multi-module workspaces</div>
+              <div class="card-desc">
+                Create and use multi-module workspaces for cross-module
+                development
+              </div>
+            </div>
+            <span class="card-status done">Available</span>
+          </a>
+
+          <a href="#" class="tutorial-card upcoming">
+            <div class="card-num planned">04</div>
+            <div class="card-body">
+              <div class="card-title">Accessing a relational database</div>
+              <div class="card-desc">
+                Basics of accessing a database using the standard library
+              </div>
+            </div>
+            <span class="card-status planned">Coming soon</span>
+          </a>
+
+          <a href="#" class="tutorial-card upcoming">
+            <div class="card-num planned">05</div>
+            <div class="card-body">
+              <div class="card-title">RESTful API with Go and Gin</div>
+              <div class="card-desc">
+                Writing a RESTful web service API with Go and Gin
+              </div>
+            </div>
+            <span class="card-status planned">Coming soon</span>
+          </a>
+
+          <a href="#" class="tutorial-card upcoming">
+            <div class="card-num planned">06</div>
+            <div class="card-body">
+              <div class="card-title">Getting started with generics</div>
+              <div class="card-desc">
+                Declare and use functions or types that work with any set of
+                types
+              </div>
+            </div>
+            <span class="card-status planned">Coming soon</span>
+          </a>
+
+          <a href="#" class="tutorial-card upcoming">
+            <div class="card-num planned">07</div>
+            <div class="card-body">
+              <div class="card-title">Getting started with fuzzing</div>
+              <div class="card-desc">
+                Generate test inputs to catch edge cases and security issues
+              </div>
+            </div>
+            <span class="card-status planned">Coming soon</span>
+          </a>
+
+          <a href="#" class="tutorial-card upcoming">
+            <div class="card-num planned">08</div>
+            <div class="card-body">
+              <div class="card-title">Getting started with govulncheck</div>
+              <div class="card-desc">
+                Find and fix vulnerabilities with govulncheck
+              </div>
+            </div>
+            <span class="card-status planned">Coming soon</span>
+          </a>
+
+          <a href="#" class="tutorial-card upcoming">
+            <div class="card-num planned">09</div>
+            <div class="card-body">
+              <div class="card-title">
+                Vulnerable dependencies with VS Code Go
+              </div>
+              <div class="card-desc">
+                Find and fix vulnerable dependencies in your editor
+              </div>
+            </div>
+            <span class="card-status planned">Coming soon</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ═══════════════════ BONUS ═══════════════════ -->
+      <section class="bonus-section">
+        <div class="section-label">Bonus</div>
+        <h2 class="section-title">Extended tutorials</h2>
+        <p class="section-desc">
+          Longer-form guides beyond the core tutorial series.
+        </p>
+
+        <div class="tutorial-grid">
+          <a href="#" class="tutorial-card upcoming">
+            <div class="card-num planned">B1</div>
+            <div class="card-body">
+              <div class="card-title">Writing web applications</div>
+              <div class="card-desc">
+                Build a simple wiki web application from scratch
+              </div>
+            </div>
+            <span class="card-status planned">Coming soon</span>
+          </a>
+
+          <a href="#" class="tutorial-card upcoming">
+            <div class="card-num planned">B2</div>
+            <div class="card-body">
+              <div class="card-title">A Tour of Go</div>
+              <div class="card-desc">
+                Interactive introduction to Go in four sections
+              </div>
+            </div>
+            <span class="card-status planned">Coming soon</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
+      <section class="how-section">
+        <div class="section-label">About this project</div>
+        <h2 class="section-title">How these tutorials work</h2>
+        <p class="section-desc">
+          Each tutorial is a single HTML file — no build step, no frameworks.
+        </p>
+
+        <div class="how-grid">
+          <div class="how-card">
+            <div class="how-icon">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+              >
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
+              </svg>
+            </div>
+            <h3>Visual-first</h3>
+            <p>
+              Inline SVG diagrams explain module relationships, data flow, and
+              architecture — concepts that are hard to convey with text alone.
+            </p>
+          </div>
+          <div class="how-card">
+            <div class="how-icon">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M9 9h6v6H9z" />
+              </svg>
+            </div>
+            <h3>Self-contained</h3>
+            <p>
+              Each file works standalone. Open it in any browser. No npm, no
+              bundler, no dependencies beyond Google Fonts.
+            </p>
+          </div>
+          <div class="how-card">
+            <div class="how-icon">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+              >
+                <path d="M12 20V10" />
+                <path d="M18 20V4" />
+                <path d="M6 20v-4" />
+              </svg>
+            </div>
+            <h3>Step-by-step</h3>
+            <p>
+              Same progression as the official tutorial — terminal commands,
+              code blocks, and explanations — enhanced with diagrams at every
+              step.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════ FOOTER ═══════════════════ -->
+      <footer class="site-footer">
+        <div class="footer-links">
+          <a href="https://go.dev/doc/tutorial/" target="_blank" rel="noopener"
+            >Official Go tutorials ↗</a
+          >
+          <a href="https://go.dev/doc/" target="_blank" rel="noopener"
+            >Go documentation ↗</a
+          >
+          <a
+            href="https://github.com/arafat-al-mahmud/visual-go-tutorials"
+            target="_blank"
+            rel="noopener"
+            >GitHub repo ↗</a
+          >
+        </div>
+        <p class="footer-note">
+          Tutorial content adapted from
+          <a href="https://go.dev" target="_blank" rel="noopener">go.dev</a>,
+          licensed under
+          <a
+            href="https://creativecommons.org/licenses/by/4.0/"
+            target="_blank"
+            rel="noopener"
+            >CC BY 4.0</a
+          >. Visual tutorials by Arafat.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
